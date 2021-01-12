@@ -1,0 +1,20 @@
+.vscode
+.vs
+**/.ipynb_checkpoints
+
+# Byte-compiled / optimized / DLL files
+__pycache__
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+*.7z
+*.zip
+**/CFExp
+**/imgs
+**/mask
+**/runs
+*.pth
+*.pt
