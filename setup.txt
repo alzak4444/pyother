@@ -1,0 +1,31 @@
+rem Working condition: pytorch 1.5 & 1.6 with cuda 10.1 & 10.2
+rem Not working 1.7.. 
+rem not tested cuda 11
+call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvars64.bat"
+conda create --name detectron2 python=3.7
+rem --- would stop here ----, copy paste manually
+conda activate detectron2
+pause
+cd pycocotools-2.0.1
+python setup.py build_ext install
+cd ..
+pause
+nvcc --version
+pause
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
+rem conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.1 -c pytorch
+rem conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
+rem conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+pause
+cd detectron2
+set DISTUTILS_USE_SDK=1
+pip install -e .
+pause
+rem if want to start fresh
+conda remove --name detectron2 --all
+rem Verify the CUDA runtime and compiler is same
+python -m detectron2.utils.collect_env
+
+python demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml 	--input datasets/b.jpg --output output.jpg 	--opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x/137260431/model_final_a54504.pkl
+	
+	
