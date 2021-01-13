@@ -1,5 +1,5 @@
 rem Working condition: pytorch 1.5 & 1.6 with cuda 10.1 & 10.2
-rem Not working 1.7.. 
+rem working 1.7.. need to change the file ir.h in  site-packages\torch\include\torch\csrc\jit\ir, comment line 1347??
 rem not tested cuda 11
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvars64.bat"
 conda create --name detectron2 python=3.7
@@ -8,6 +8,7 @@ conda activate detectron2
 pause
 cd pycocotools-2.0.1
 python setup.py build_ext install
+rem ---- ensure to remove the pycocotools dependency in detectron2\setup.py -----
 cd ..
 pause
 nvcc --version
