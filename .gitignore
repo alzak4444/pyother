@@ -18,4 +18,5 @@ __pycache__
 **/runs
 *.pth
 *.pt
-pycocotoo*
+pyco/*
+!pyco*.7z
