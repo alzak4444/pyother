@@ -21,6 +21,7 @@ import os
 from collections import OrderedDict
 import torch
 
+import detectron2
 import detectron2.utils.comm as comm
 from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.config import get_cfg
@@ -121,12 +122,31 @@ def setup(args):
     cfg = get_cfg()
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
+
+    # ----------- custom --------------
+    detectron2.data.datasets.register_coco_instances("wires", {}, "./mydata/coco.json", "./mydata/images")
+
+    cfg.DATASETS.TRAIN = ("wires")
+    cfg.DATASETS.TEST = ()  # no metrics implemented for this dataset
+    cfg.DATALOADER.NUM_WORKERS = 4
+
+    cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.BASE_LR = 0.02  # learning rate, default 0.02
+    cfg.SOLVER.MAX_ITER = (
+        5300
+    )  # 300 iterations seems good enough, but you can certainly train longer
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3  # 3 classes (data, fig, hazelnut)
+    #cfg.INPUT.MASK_FORMAT='bitmask' # use RLE instead of polygon
+    cfg.INPUT.MIN_SIZE_TRAIN = (200, 300, 400, 500)
+    # ---------------------------
+
     cfg.freeze()
     default_setup(cfg, args)
     return cfg
 
 
 def main(args):
+
     cfg = setup(args)
 
     if args.eval_only:
@@ -147,7 +167,7 @@ def main(args):
     subclassing the trainer.
     """
     trainer = Trainer(cfg)
-    trainer.resume_or_load(resume=args.resume)
+    trainer.resume_or_load(False)
     if cfg.TEST.AUG.ENABLED:
         trainer.register_hooks(
             [hooks.EvalHook(0, lambda: trainer.test_with_TTA(cfg, trainer.model))]

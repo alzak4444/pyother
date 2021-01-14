@@ -1,4 +1,6 @@
 rem Working condition: pytorch 1.5 & 1.6 with cuda 10.1 & 10.2
+C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Lib\site-packages\torch
+
 rem working 1.7.. need to change the file ir.h in  site-packages\torch\include\torch\csrc\jit\ir, comment line 1347??
 rem not tested cuda 11
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvars64.bat"
@@ -13,6 +15,10 @@ cd ..
 pause
 nvcc --version
 pause
+
+for PIP:
+pip --no-cache-dir install torch===1.7.1 torchvision===0.8.2 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
+
 conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
 rem conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.1 -c pytorch
 rem conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch

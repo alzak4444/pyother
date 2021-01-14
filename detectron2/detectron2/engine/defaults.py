@@ -73,7 +73,7 @@ Run on multiple machines:
 """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--config-file", default="", metavar="FILE", help="path to config file")
+    parser.add_argument("--config-file", default="configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml", metavar="FILE", help="path to config file")
     parser.add_argument(
         "--resume",
         action="store_true",
@@ -221,7 +221,7 @@ class DefaultPredictor:
 
             inputs = {"image": image, "height": height, "width": width}
             predictions = self.model([inputs])[0]
-            return predictions
+            return predictions, inputs
 
 
 class DefaultTrainer(TrainerBase):
