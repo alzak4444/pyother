@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a7c9d0af-54c0-456b-8234-703ffca6ac5c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tools\plain_train_net.py</StartupFile>
+    <StartupFile>demo\demo.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,6 +13,9 @@
     <RootNamespace>testDtron</RootNamespace>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>--config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_DC5_3x.yaml 	--input mydata/images/0001.png --confidence-threshold 0.8 --opts MODEL.WEIGHTS ./output/model_final.pth MODEL.ROI_HEADS.NUM_CLASSES 3</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +38,8 @@
     <Folder Include="configs\Misc\" />
     <Folder Include="configs\PascalVOC-Detection\" />
     <Folder Include="configs\quick_schedules\" />
+    <Folder Include="demo\" />
+    <Folder Include="demo\__pycache__\" />
     <Folder Include="detectron2\" />
     <Folder Include="detectron2\checkpoint\" />
     <Folder Include="detectron2\checkpoint\__pycache__\" />
@@ -98,6 +103,8 @@
     <Folder Include="tools\deploy\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="demo\demo.py" />
+    <Compile Include="demo\predictor.py" />
     <Compile Include="detectron2\checkpoint\c2_model_loading.py" />
     <Compile Include="detectron2\checkpoint\catalog.py" />
     <Compile Include="detectron2\checkpoint\detection_checkpoint.py" />
@@ -340,6 +347,8 @@
     <Content Include="configs\quick_schedules\semantic_R_50_FPN_inference_acc_test.yaml" />
     <Content Include="configs\quick_schedules\semantic_R_50_FPN_instant_test.yaml" />
     <Content Include="configs\quick_schedules\semantic_R_50_FPN_training_acc_test.yaml" />
+    <Content Include="demo\README.md" />
+    <Content Include="demo\__pycache__\predictor.cpython-37.pyc" />
     <Content Include="detectron2\checkpoint\__pycache__\c2_model_loading.cpython-37.pyc" />
     <Content Include="detectron2\checkpoint\__pycache__\catalog.cpython-37.pyc" />
     <Content Include="detectron2\checkpoint\__pycache__\detection_checkpoint.cpython-37.pyc" />
